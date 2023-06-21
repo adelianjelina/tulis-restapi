@@ -3,38 +3,39 @@ const app = express()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+// const bcrypt = require('bcryptjs')
 require('dotenv').config()
 
 app.use(bodyParser.urlencoded({
-    extended: true
-}))
-app.use(bodyParser.json())
+  extended:true
+}));
+app.use(bodyParser.json());
 app.use(cors())
 
 // import routes
-const authRoutes = require('../routes/auth')
-const postRoutes = require('../routes/post')
+const authRoutes = require('./routes/auth')
+const postRoutes = require('./routes/post')
 
 app.use('/auth', authRoutes)
 app.use('/post', postRoutes)
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Davai, blin!')
 })
 
 mongoose.connect(process.env.DB_CONNECTION, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+  useNewUrlParser: true,
+  useUnifiedTopology:true
 })
 
 let db = mongoose.connection
 
-// handle error 
-db.on('error', console.log.bind(console, 'Error estabilishing a database connection'))
+//handle error
+db.on('error', console.error.bind(console, 'Error database connesction'))
 
-// handle sucess
-db.once('open', () => {
-    console.log('Database is connected')
+//handle successs
+db.once('open', ()=>{
+  console.log('Database is connected')
 })
 
 app.listen(process.env.PORT, () => {

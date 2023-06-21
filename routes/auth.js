@@ -5,7 +5,8 @@ const bcrypt = require('bcryptjs')
 const User = require('../models/User')
 
 // import validation
-const { registerValidation, 
+const { 
+    registerValidation, 
     loginValidation 
 } = require('../config/validation')
 
@@ -29,7 +30,7 @@ router.post('/register', async (req, res) => {
     const { 
         error 
     } = registerValidation(req.body)
-    if (error) return res.status(200).json(result(0,error.details[0].message))
+    if (error) return res.status(200).json(result(0, error.details[0].message))
 
     // username exist
     const usernameExist = await User.findOne({ 
@@ -50,13 +51,15 @@ router.post('/register', async (req, res) => {
         const saveUser = await user.save()
         res.status(200).json(result(1, 'Register User Succes!', saveUser))
     } catch (error) {
-        res.status(200).json(result(0, ' User Failed!'))
+        res.status(200).json(result(0, 'Register User Failed!'))
     }
 })
 
 // login
 router.post('/login', async (req, res) => {
-    const { error } = loginValidation(req.body)
+    const { 
+        error 
+    } = loginValidation(req.body)
     if (error) return res.status(200).json(result(0, error.details[0].message))
 
     // username exist
