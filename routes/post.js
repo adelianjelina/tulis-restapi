@@ -57,6 +57,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const inputPost = new Post({
         content: req.body.content,
+        deskripsi: req.body.deskripsi,
         user_id: req.body.user_id
     })
 
